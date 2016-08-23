@@ -1,19 +1,28 @@
 /**
  * Created by jonayet on 8/22/16.
  */
-import React, {Component} from "react";
+import React, {Component, PropTypes} from "react";
 import RepositoryRow from "./RepositoryRow.jsx";
+import { connect } from 'react-redux'
+import { fetchRepositories } from './actions'
 
 class RepositoryTable extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
     }
 
-    render(){
+    componentDidMount() {
+        const { dispatch } = this.props;
+        dispatch(fetchRepositories());
+    }
+
+    render() {
+        const { isFetching, repositories } = this.props;
         var rows = [];
-        this.props.repositories.forEach(function(repository) {
+        repositories.forEach(function (repository) {
             rows.push(<RepositoryRow key={repository.name} repository={repository}/>);
         }.bind(this));
+        var loading = isFetching ? <div>Loading....</div> : "";
 
         return(
             <div>
@@ -31,9 +40,24 @@ class RepositoryTable extends Component {
                     {rows}
                     </tbody>
                 </table>
+                {loading}
             </div>
         )
     }
 }
 
-export default RepositoryTable;
+RepositoryTable.propTypes = {
+    repositories: PropTypes.array.isRequired,
+    isFetching: PropTypes.bool.isRequired,
+    dispatch: PropTypes.func.isRequired
+};
+
+function mapStateToProps(state) {
+    const { isFetching, repositories } = state;
+    return {
+        isFetching,
+        repositories
+    }
+}
+
+export default connect(mapStateToProps)(RepositoryTable);

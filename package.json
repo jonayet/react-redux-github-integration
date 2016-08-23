@@ -23,8 +23,12 @@
   },
   "homepage": "https://github.com/jonayet/react-redux-github-integration#readme",
   "dependencies": {
+    "isomorphic-fetch": "^2.2.1",
     "react": "^15.3.1",
-    "react-dom": "^15.3.1"
+    "react-dom": "^15.3.1",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.2",
+    "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.13.2",
