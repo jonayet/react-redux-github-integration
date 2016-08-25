@@ -6,6 +6,7 @@ import ReactDom from "react-dom";
 import { Provider } from "react-redux";
 import store from "./store"
 import RepositoryTable from "./RepositoryTable.jsx";
+import CommitList from "./CommitList.jsx";
 
 class App extends Component {
     render(){
@@ -13,7 +14,7 @@ class App extends Component {
             <div>
                 <div>React Redux Github integration</div>
                 <hr/>
-                <RepositoryTable />
+                <RepositoryTable/>
             </div>
         );
     }
