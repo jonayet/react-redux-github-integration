@@ -2,9 +2,9 @@
  * Created by jonayet on 8/22/16.
  */
 import React, {Component, PropTypes} from "react";
-import RepositoryRow from "./RepositoryRow.jsx";
-import { connect } from 'react-redux'
+import { connect } from "react-redux";
 import { fetchRepositories } from './actions'
+import RepositoryRow from "./RepositoryRow.jsx";
 
 class RepositoryTable extends Component {
     componentDidMount() {
@@ -14,10 +14,10 @@ class RepositoryTable extends Component {
 
     render() {
         const { isFetching, repositories } = this.props;
-        var rows = repositories.map(function (repository) {
+        const rows = repositories.map(function (repository) {
             return(<RepositoryRow key={repository.name} repository={repository}/>);
         });
-        var loading = isFetching ? <div>Loading....</div> : "";
+        const loading = isFetching ? <div>Loading....</div> : "";
 
         return(
             <div>

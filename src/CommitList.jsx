@@ -2,24 +2,31 @@
  * Created by jonayet on 8/25/16.
  */
 import React, {Component, PropTypes} from "react";
+import { connect } from "react-redux";
+import {Link} from "react-router";
 import CommitRow from "./CommitRow.jsx";
-
+import { fetchCommits } from './actions'
 
 class CommitList extends Component {
     componentDidMount(){
-        const {dispatch} = this.props;
-        //dispatch();
+        const { dispatch, repository } = this.props;
+        if(repository) {
+            const commitsUrl = repository.commits_url.substring(0, repository.commits_url.indexOf('{'));
+            dispatch(fetchCommits(commitsUrl));
+        }
     }
 
     render(){
         const {repository, isFetching, commits} = this.props;
-        var rows = commits.map(function (commit) {
+        const repositoryName = repository ? repository.full_name : "";
+        const rows = commits.map(function (commit) {
             return (<CommitRow key={commit.sha} commit={commit}/>);
         });
+        const loading = isFetching ? <div>Loading....</div> : "";
 
         return(
             <div>
-                <div>Repository: {repository.full_name}</div>
+                <div>Repository: {repositoryName}</div>
                 <table>
                     <thead>
                         <tr>
@@ -33,13 +40,28 @@ class CommitList extends Component {
                         {rows}
                     </tbody>
                 </table>
+                {loading}
+                <div>
+                    <Link to="/">Back</Link>
+                </div>
             </div>
         )
     }
 }
 
 CommitList.propTypes = {
-    repository: PropTypes.object.isRequired
+    isFetching: PropTypes.bool.isRequired,
+    commits: PropTypes.array.isRequired,
+    dispatch: PropTypes.func.isRequired
 };
 
-export default CommitList;
+function mapStateToProps(state) {
+    const { isFetching, selectedRepository, commits } = state;
+    return {
+        isFetching,
+        repository: selectedRepository,
+        commits
+    }
+}
+
+export default connect(mapStateToProps)(CommitList);

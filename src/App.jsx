@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import store from "./store"
 import RepositoryTable from "./RepositoryTable.jsx";
 import CommitList from "./CommitList.jsx";
+import {Router, Route, hashHistory} from "react-router";
 
 class App extends Component {
     render(){
@@ -23,7 +24,10 @@ class App extends Component {
 const store1 = store();
 ReactDom.render(
     <Provider store={store1}>
-        <App/>
+        <Router history={hashHistory}>
+            <Route path="/" component={App}/>
+            <Route path="/repository/:id" component={CommitList}/>
+        </Router>
     </Provider>,
     document.getElementById("react-view")
 );

@@ -9,7 +9,9 @@ import repositories from "./reducers";
 export default function store() {
     const initialState = {
         isFetching: false,
-        repositories: []
+        repositories: [],
+        selectedRepository: null,
+        commits: []
     };
 
     return createStore(repositories, initialState,
