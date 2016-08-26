@@ -8,6 +8,7 @@ export const RECEIVE_REPOSITORIES = 'RECEIVE_REPOSITORIES';
 export const SELECT_REPOSITORY = 'SELECT_REPOSITORY';
 export const REQUEST_COMMITS = 'REQUEST_COMMITS';
 export const RECEIVE_COMMITS = 'RECEIVE_COMMITS';
+export const SEARCH_COMMITS = 'SEARCH_COMMITS';
 
 function requestRepositories() {
     return {
@@ -57,5 +58,12 @@ export function fetchCommits(url) {
         return fetch(url)
             .then(response => response.json())
             .then(json => dispatch(receiveCommits(json)))
+    }
+}
+
+export function searchCommits(searchText) {
+    return {
+        type: SEARCH_COMMITS,
+        searchText: searchText
     }
 }

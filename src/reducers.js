@@ -6,7 +6,8 @@ import {
     RECEIVE_REPOSITORIES,
     SELECT_REPOSITORY,
     REQUEST_COMMITS,
-    RECEIVE_COMMITS
+    RECEIVE_COMMITS,
+    SEARCH_COMMITS
 } from './actions'
 
 
@@ -33,6 +34,10 @@ function repositories(state = {}, action) {
             return Object.assign({}, state, {
                 isFetching: false,
                 commits: action.commits
+            });
+        case SEARCH_COMMITS:
+            return Object.assign({}, state, {
+                commitSearchText: action.searchText
             });
         default:
             return state

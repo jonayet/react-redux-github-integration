@@ -3,8 +3,8 @@
  */
 import React, {Component, PropTypes} from "react";
 import {hashHistory} from "react-router";
-import { connect } from "react-redux";
-import { selectedRepository, fetchCommits } from './actions'
+import {connect} from "react-redux";
+import {selectedRepository, fetchCommits} from './actions'
 
 class RepositoryRow extends Component {
     handleClick(repository) {

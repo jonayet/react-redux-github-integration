@@ -1,7 +1,7 @@
 /**
  * Created by jonayet on 8/22/16.
  */
-import { createStore, applyMiddleware } from "redux";
+import {createStore, applyMiddleware} from "redux";
 import thunkMiddleware from 'redux-thunk'
 import repositories from "./reducers";
 
@@ -11,7 +11,8 @@ export default function store() {
         isFetching: false,
         repositories: [],
         selectedRepository: null,
-        commits: []
+        commits: [],
+        commitSearchText: ""
     };
 
     return createStore(repositories, initialState,
