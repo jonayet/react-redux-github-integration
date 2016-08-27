@@ -12,7 +12,8 @@ export default function store() {
         repositories: [],
         selectedRepository: null,
         commits: [],
-        commitSearchText: ""
+        commitSearchText: "",
+        nextCommitsLink: ""
     };
 
     return createStore(repositories, initialState,

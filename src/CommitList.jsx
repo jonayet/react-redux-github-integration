@@ -7,50 +7,63 @@ import {Link} from "react-router";
 import CommitSearchBox from "./CommitSearchBox.jsx";
 import CommitRow from "./CommitRow.jsx";
 import {fetchCommits} from "./actions";
+import Waypoint from "react-waypoint";
+
 
 class CommitList extends Component {
-    componentDidMount(){
-        const { dispatch, repository } = this.props;
-        if(repository) {
-            const commitsPerPage = 20;
-            const commitsUrl = repository.commits_url.substring(0, repository.commits_url.indexOf('{'));
-            dispatch(fetchCommits(commitsUrl + "?per_page=" + commitsPerPage));
-        }
+    loadCommits(){
+        const { dispatch, isFetching, repository, commits, nextCommitsLink } = this.props;
+        if(!repository || isFetching) return;
+        const commitsBaseUrl = repository.commits_url.substring(0, repository.commits_url.indexOf('{'));
+        const commitsUrl = commits.length == 0 ? commitsBaseUrl : nextCommitsLink;
+        if(!commitsUrl) return;
+        const isInitialFetch = commits.length == 0;
+        dispatch(fetchCommits(commitsUrl, isInitialFetch));
+    }
+
+    renderWaypoint() {
+        return (
+            <Waypoint
+                onEnter={this.loadCommits.bind(this)}
+                threshold={2.0}
+            />
+        );
     }
 
     render(){
-        const {repository, isFetching, commits, commitSearchText} = this.props;
+        const {repository, isFetching, commits, searchText} = this.props;
         const repositoryName = repository ? repository.full_name : "";
-        var rows = [];
-        commits.forEach(function (commit) {
-            const searchRegex = new RegExp(commitSearchText, "i");
-            if (commitSearchText && !commit.commit.message.match(searchRegex))
-                return;
-            rows.push(<CommitRow key={commit.sha} commit={commit}/>);
+        const rows = commits.filter(function (commit) {
+            return !searchText || commit.commit.message.match(new RegExp(searchText, "i"));
+        }).map(function (commit) {
+            return(<CommitRow key={commit.sha} commit={commit}/>);
         });
         const loading = isFetching ? <div>Loading....</div> : "";
 
         return(
             <div>
                 <div>Repository: {repositoryName}</div>
-                <CommitSearchBox/>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Message</th>
-                            <th>Committer Name</th>
-                            <th>Committer Email</th>
-                            <th>Key</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {rows}
-                    </tbody>
-                </table>
-                {loading}
                 <div>
                     <Link to="/">Back</Link>
                 </div>
+                <CommitSearchBox/>
+                <div style={{overflow: 'auto', maxHeight: 400}}>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Message</th>
+                                <th>Committer Name</th>
+                                <th>Committer Email</th>
+                                <th>Key</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {rows}
+                        </tbody>
+                    </table>
+                    {this.renderWaypoint()}
+                </div>
+                {loading}
             </div>
         )
     }
@@ -59,17 +72,19 @@ class CommitList extends Component {
 CommitList.propTypes = {
     isFetching: PropTypes.bool.isRequired,
     commits: PropTypes.array.isRequired,
-    commitSearchText: PropTypes.string.isRequired,
+    searchText: PropTypes.string.isRequired,
+    nextCommitsLink: PropTypes.string.isRequired,
     dispatch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
-    const { isFetching, selectedRepository, commits, commitSearchText } = state;
+    const { isFetching, selectedRepository, commits, commitSearchText, nextCommitsLink } = state;
     return {
         isFetching,
         repository: selectedRepository,
         commits,
-        commitSearchText
+        nextCommitsLink,
+        searchText: commitSearchText
     }
 }
 

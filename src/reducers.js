@@ -7,7 +7,9 @@ import {
     SELECT_REPOSITORY,
     REQUEST_COMMITS,
     RECEIVE_COMMITS,
-    SEARCH_COMMITS
+    SEARCH_COMMITS,
+    RESET_COMMITS,
+    SET_NEXT_COMMITS_LINK
 } from './actions'
 
 
@@ -33,11 +35,21 @@ function repositories(state = {}, action) {
         case RECEIVE_COMMITS:
             return Object.assign({}, state, {
                 isFetching: false,
-                commits: action.commits
+                commits: state.commits.concat(action.commits)
             });
         case SEARCH_COMMITS:
             return Object.assign({}, state, {
                 commitSearchText: action.searchText
+            });
+        case RESET_COMMITS:
+            return Object.assign({}, state, {
+                isFetching: false,
+                commits: [],
+                nextCommitsLink: "",
+            });
+        case SET_NEXT_COMMITS_LINK:
+            return Object.assign({}, state, {
+                nextCommitsLink: action.url
             });
         default:
             return state
