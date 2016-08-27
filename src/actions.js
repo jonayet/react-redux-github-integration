@@ -28,7 +28,7 @@ function receiveRepositories(data) {
 export function fetchRepositories() {
     return dispatch => {
         dispatch(requestRepositories());
-        return fetch("https://api.github.com/users/jonayet/repos")
+        return fetch("https://api.github.com/users/facebook/repos")
             .then(response => response.json())
             .then(json => dispatch(receiveRepositories(json)))
     }

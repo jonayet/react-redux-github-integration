@@ -13,8 +13,7 @@ class App extends Component {
     render(){
         return(
             <div>
-                <div>React Redux Github integration</div>
-                <hr/>
+                <h1>React Redux Github integration</h1>
                 <RepositoryTable/>
             </div>
         );

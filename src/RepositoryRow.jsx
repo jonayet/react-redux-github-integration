@@ -17,7 +17,7 @@ class RepositoryRow extends Component {
     render(){
         const {name, url, language, stargazers_count, forks} = this.props.repository;
         return(
-            <tr onClick={this.handleClick.bind(this, this.props.repository)}>
+            <tr onClick={this.handleClick.bind(this, this.props.repository)} style={{cursor: "pointer"}}>
                 <td>{name}</td>
                 <td>{url}</td>
                 <td>{language}</td>

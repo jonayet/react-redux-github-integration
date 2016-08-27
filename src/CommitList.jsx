@@ -42,13 +42,19 @@ class CommitList extends Component {
 
         return(
             <div>
-                <div>Repository: {repositoryName}</div>
-                <div>
-                    <Link to="/">Back</Link>
+                <h1>Repository: {repositoryName}</h1>
+
+                <div className="row">
+                    <div className="col-sm-4">
+                        <Link to="/" className="btn btn-default">Back</Link>
+                    </div>
+                    <div className="col-sm-4">
+                        <CommitSearchBox/>
+                    </div>
                 </div>
-                <CommitSearchBox/>
+
                 <div style={{overflow: 'auto', maxHeight: 400}}>
-                    <table>
+                    <table className="table">
                         <thead>
                             <tr>
                                 <th>Message</th>

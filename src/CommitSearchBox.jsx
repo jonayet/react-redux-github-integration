@@ -18,6 +18,7 @@ class CommitSearchBox extends Component {
                     type="text"
                     placeholder="Search commit..."
                     onChange={this.handleKeystroke.bind(this)}
+                    className="form-control input-md"
                 />
             </div>
         )

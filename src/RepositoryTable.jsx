@@ -21,7 +21,7 @@ class RepositoryTable extends Component {
 
         return(
             <div>
-                <table>
+                <table className="table table-hover">
                     <thead>
                         <tr>
                             <th>Name</th>
