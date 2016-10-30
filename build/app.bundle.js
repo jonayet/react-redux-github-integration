@@ -111,7 +111,21 @@
 	                    null,
 	                    "React Redux Github integration"
 	                ),
-	                _react2.default.createElement(_RepositoryTable2.default, null)
+	                _react2.default.createElement(_RepositoryTable2.default, null),
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "github-link" },
+	                    _react2.default.createElement(
+	                        "label",
+	                        null,
+	                        "GitHub: "
+	                    ),
+	                    _react2.default.createElement(
+	                        "a",
+	                        { href: "https://github.com/jonayet/react-redux-github-integration" },
+	                        "https://github.com/jonayet/react-redux-github-integration"
+	                    )
+	                )
 	            );
 	        }
 	    }]);
