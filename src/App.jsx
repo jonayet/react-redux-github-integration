@@ -15,6 +15,10 @@ class App extends Component {
             <div>
                 <h1>React Redux Github integration</h1>
                 <RepositoryTable/>
+                <div className="github-link" >
+                    <label>GitHub: </label>
+                    <a href="https://github.com/jonayet/react-redux-github-integration">https://github.com/jonayet/react-redux-github-integration</a>
+                </div>
             </div>
         );
     }
